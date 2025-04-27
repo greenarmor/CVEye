@@ -32,6 +32,7 @@ services:
 
   frontend:
     build: ./frontend
+    dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
