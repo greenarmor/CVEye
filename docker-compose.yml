@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cveai
+    ports:
+      - "3306:3306"
+
+  chromadb:
+    image: chromadb/chroma
+    ports:
+      - "8000:8000"
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+
+  backend:
+    build: ./backend
+    ports:
+      - "8001:8001"
+    environment:
+      MYSQL_URL: "mysql+pymysql://root:root@mysql:3306/cveai"
+      OLLAMA_BASE_URL: "http://ollama:11434"
+    depends_on:
+      - mysql
+      - chromadb
+      - ollama
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
