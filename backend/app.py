@@ -1,4 +1,4 @@
-from fastapi import FastAP0
+from fastapi import FastAPI
 from mcp_scraper.mcp_server import mcp_router
 from llm.rag_chain import chat_router
 
